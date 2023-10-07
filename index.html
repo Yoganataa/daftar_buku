@@ -1,129 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Daftar Buku</title>
     <!-- Tambahkan link ke Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100">
     <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-semibold mb-4">Daftar Buku</h1>
+      <h1 class="text-3xl font-semibold mb-4">Daftar Buku</h1>
 
-        <!-- Input pencarian dan tombol pencarian -->
-        <div class="mb-4 flex items-center">
-            <input id="search-input" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cari buku berdasarkan judul...">
-            <button id="search-button" class="bg-blue-500 text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.2-5.2"/>
-                    <circle cx="10" cy="10" r="7"/>
-                </svg>
-            </button>
+      <!-- Input pencarian -->
+      <form class="flex items-center">
+        <label for="search" class="sr-only">Search</label>
+        <div class="relative w-full">
+          <div
+            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="search"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Cari buku berdasarkan judul..."
+            required
+          />
+          <button
+            type="button"
+            id="clear-search"
+            class="absolute inset-y-0 right-0 flex items-center pr-3 hidden"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
         </div>
+      </form>
 
-        <div id="book-list" class="grid grid-cols-1 gap-4"></div>
-        
-        <div id="loading" class="text-center mt-4 text-blue-500"></div>
+      <div id="book-list" class="grid grid-cols-1 gap-4"></div>
+
+      <div id="loading" class="text-center mt-4 text-blue-500"></div>
     </div>
 
+    <!-- Bottom Navbar -->
+    <div
+      class="fixed bottom-0 left-0 right-0 bg-white border border-gray-200 rounded-t-lg lg:hidden"
+    >
+      <div class="grid grid-cols-5 mx-auto">
+        <button
+          data-tooltip-target="tooltip-home"
+          type="button"
+          class="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        >
+          <svg
+            class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"
+            />
+          </svg>
+          <span class="sr-only">Home</span>
+        </button>
+        <div
+          id="tooltip-home"
+          role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+        >
+          Home
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <button
+          data-tooltip-target="tooltip-wallet"
+          type="button"
+          class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        >
+          <svg
+            class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M11.074 4 8.442.408A.95.95 0 0 0 7.014.254L2.926 4h8.148ZM9 13v-1a4 4 0 0 1 4-4h6V6a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h17a1 1 0 0 0 1-1v-2h-6a4 4 0 0 1-4-4Z"
+            />
+            <path
+              d="M19 10h-6a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1Zm-4.5 3.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM12.62 4h2.78L12.539 .41a1.086 1.086 0 1 0-1.7 1.352L12.62 4Z"
+            />
+          </svg>
+          <span class="sr-only">Wallet</span>
+        </button>
+        <div
+          id="tooltip-wallet"
+          role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+        >
+          Wallet
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <div class="flex items-center justify-center">
+          <button
+            data-tooltip-target="tooltip-new"
+            type="button"
+            class="inline-flex items-center justify-center w-10 h-10 font-medium bg-blue-600 rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
+          >
+            <svg
+              class="w-4 h-4 text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 18 18"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 1v16M1 9h16"
+              />
+            </svg>
+            <span class="sr-only">New item</span>
+          </button>
+        </div>
+        <div
+          id="tooltip-new"
+          role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+        >
+          Create new item
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <button
+          data-tooltip-target="tooltip-settings"
+          type="button"
+          class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        >
+          <svg
+            class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5m0 2.25V19m6-14.25V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"
+            />
+          </svg>
+          <span class="sr-only">Settings</span>
+        </button>
+        <div
+          id="tooltip-settings"
+          role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+        >
+          Settings
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        <button
+          data-tooltip-target="tooltip-profile"
+          type="button"
+          class="inline-flex flex-col items-center justify-center px-5 rounded-r-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        >
+          <svg
+            class="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"
+            />
+          </svg>
+          <span class="sr-only">Profile</span>
+        </button>
+        <div
+          id="tooltip-profile"
+          role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+        >
+          Profile
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tambahkan script Anda di sini -->
     <script>
-        // Data buku dalam array
-        const books = [
+      // Data buku dalam array
+      const books = [
         {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            {
-                imageUrl: 'https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg',
-                title: 'Book 1',
-                description: 'Description for Book 1',
-                link: '#',
-            },
-            
-            // Tambahkan data buku lainnya di sini...
-        ];
+          imageUrl:
+            "https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg",
+          title: "Book 1",
+          description: "Description for Book 1",
+          link: "#",
+        },
+        {
+          imageUrl:
+            "https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg",
+          title: "Book 2",
+          description: "Description for Book 1",
+          link: "#",
+        },
+        {
+          imageUrl:
+            "https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg",
+          title: "Book 3",
+          description: "Description for Book 1",
+          link: "#",
+        },
+        {
+          imageUrl:
+            "https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg",
+          title: "Book 4",
+          description: "Description for Book 1",
+          link: "#",
+        },
+        {
+          imageUrl:
+            "https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg",
+          title: "Book 5",
+          description: "Description for Book 1",
+          link: "#",
+        },
+        {
+          imageUrl:
+            "https://blog-static.mamikos.com/wp-content/uploads/2020/05/Cover-novel.jpg",
+          title: "Book 6",
+          description: "Description for Book 1",
+          link: "#",
+        },
 
-        // Fungsi untuk membuat card view
-        function createCard(book) {
-            const card = document.createElement('div');
-            card.classList.add('max-w-lg', 'bg-white', 'border', 'border-gray-200', 'rounded-lg', 'shadow', 'dark:bg-gray-800', 'dark:border-gray-700');
+        // Tambahkan data buku lainnya di sini...
+      ];
 
-            card.innerHTML = `
+      // Fungsi untuk membuat card view
+      function createCard(book) {
+        const card = document.createElement("div");
+        card.classList.add(
+          "max-w-lg",
+          "bg-white",
+          "border",
+          "border-gray-200",
+          "rounded-lg",
+          "shadow",
+          "dark:bg-gray-800",
+          "dark:border-gray-700"
+        );
+
+        card.innerHTML = `
                 <a href="#">
                     <img class="w-full rounded-t-lg" src="${book.imageUrl}" alt="" />
                 </a>
@@ -135,100 +298,114 @@
                     <a href="${book.link}" class="inline-flex items-center px-2.5 py-1.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Read more
                         <svg class="w-4 h-4 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0l-4 4m4-4l-4-4m4 4L1 5"/>
                         </svg>
                     </a>
                 </div>
             `;
 
-            return card;
+        return card;
+      }
+
+      // Ambil elemen container
+      const bookListContainer = document.getElementById("book-list");
+      const loadingIndicator = document.getElementById("loading");
+      const searchInput = document.getElementById("search");
+      const clearSearchButton = document.getElementById("clear-search");
+
+      // Variabel untuk melacak halaman saat ini
+      let currentPage = 1;
+      let isLoading = false;
+      let allBooksLoaded = false;
+
+      // Fungsi untuk menampilkan lebih banyak buku
+      function loadMoreBooks() {
+        if (isLoading || allBooksLoaded) return;
+
+        const booksPerPage = 5;
+        const startIndex = (currentPage - 1) * booksPerPage;
+        const endIndex = startIndex + booksPerPage;
+
+        // Tampilkan loading indicator
+        loadingIndicator.innerHTML = "Loading...";
+        isLoading = true;
+
+        setTimeout(() => {
+          // Hapus loading indicator
+          loadingIndicator.innerHTML = "";
+          isLoading = false;
+
+          for (let i = startIndex; i < endIndex && i < books.length; i++) {
+            const card = createCard(books[i]);
+            bookListContainer.appendChild(card);
+          }
+
+          currentPage++;
+
+          // Cek apakah sudah semua buku dimuat
+          if (startIndex + booksPerPage >= books.length) {
+            allBooksLoaded = true;
+          }
+        }, 1000);
+      }
+
+      // Fungsi untuk memeriksa scroll dan memuat lebih banyak buku jika diperlukan
+      function checkScroll() {
+        if (
+          !allBooksLoaded &&
+          window.innerHeight + window.scrollY >=
+            document.body.offsetHeight - 200
+        ) {
+          loadMoreBooks();
+        }
+      }
+
+      // Fungsi untuk melakukan pencarian berdasarkan judul
+      function searchBooks(query) {
+        // Hapus semua buku yang ada di daftar saat ini
+        while (bookListContainer.firstChild) {
+          bookListContainer.removeChild(bookListContainer.firstChild);
         }
 
-        // Ambil elemen container
-        const bookListContainer = document.getElementById('book-list');
-        const loadingIndicator = document.getElementById('loading');
-        const searchInput = document.getElementById('search-input');
-        const searchButton = document.getElementById('search-button');
+        // Muat ulang buku sesuai dengan pencarian
+        const searchResults = books.filter((book) =>
+          book.title.toLowerCase().includes(query.toLowerCase())
+        );
 
-        // Variabel untuk melacak halaman saat ini
-        let currentPage = 1;
-        let isLoading = false;
-        let allBooksLoaded = false;
-
-        // Fungsi untuk menampilkan lebih banyak buku
-        function loadMoreBooks() {
-            if (isLoading || allBooksLoaded) return;
-
-            const booksPerPage = 5;
-            const startIndex = (currentPage - 1) * booksPerPage;
-            const endIndex = startIndex + booksPerPage;
-
-            // Tampilkan loading indicator
-            loadingIndicator.innerHTML = 'Loading...';
-            isLoading = true;
-
-            setTimeout(() => {
-                // Hapus loading indicator
-                loadingIndicator.innerHTML = '';
-                isLoading = false;
-
-                for (let i = startIndex; i < endIndex && i < books.length; i++) {
-                    const card = createCard(books[i]);
-                    bookListContainer.appendChild(card);
-                }
-
-                currentPage++;
-
-                // Cek apakah sudah semua buku dimuat
-                if (startIndex + booksPerPage >= books.length) {
-                    allBooksLoaded = true;
-                }
-            }, 1000);
+        for (let i = 0; i < searchResults.length; i++) {
+          const card = createCard(searchResults[i]);
+          bookListContainer.appendChild(card);
         }
+      }
 
-        // Fungsi untuk memeriksa scroll dan memuat lebih banyak buku jika diperlukan
-        function checkScroll() {
-            if (!allBooksLoaded && window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-                loadMoreBooks();
-            }
+      // Event listener untuk input pencarian
+      searchInput.addEventListener("input", (event) => {
+        const query = event.target.value.trim();
+
+        if (query === "") {
+          clearSearchButton.classList.add("hidden");
+          // Ketika input kosong, muat buku lagi
+          loadMoreBooks();
+        } else {
+          clearSearchButton.classList.remove("hidden");
+          // Ketika input tidak kosong, lakukan pencarian
+          searchBooks(query);
         }
+      });
 
-        // Tambahkan event listener untuk scroll
-        window.addEventListener('scroll', checkScroll);
-
-        // Tambahkan event listener untuk tombol cari
-        searchButton.addEventListener('click', () => {
-            searchBooks();
-        });
-
-        // Fungsi untuk melakukan pencarian buku
-        function searchBooks() {
-            const searchTerm = searchInput.value.trim().toLowerCase();
-
-            if (searchTerm === '') {
-                // Tampilkan semua buku jika pencarian kosong
-                currentPage = 1;
-                bookListContainer.innerHTML = '';
-                loadMoreBooks();
-            } else {
-                // Saring buku berdasarkan judul
-                currentPage = 1;
-                bookListContainer.innerHTML = '';
-
-                const filteredBooks = books.filter(book => book.title.toLowerCase().includes(searchTerm));
-                if (filteredBooks.length > 0) {
-                    for (let i = 0; i < filteredBooks.length; i++) {
-                        const card = createCard(filteredBooks[i]);
-                        bookListContainer.appendChild(card);
-                    }
-                } else {
-                    bookListContainer.innerHTML = '<p class="text-center text-gray-500">Tidak ada hasil yang ditemukan.</p>';
-                }
-            }
-        }
-
-        // Muat halaman pertama saat halaman dimuat
+      // Event listener untuk tombol pembatalan pencarian
+      clearSearchButton.addEventListener("click", () => {
+        searchInput.value = "";
+        clearSearchButton.classList.add("hidden");
+        // Ketika tombol pembatalan pencarian diklik, muat buku lagi
         loadMoreBooks();
+      });
+
+      // Tambahkan event listener untuk scroll
+      window.addEventListener("scroll", checkScroll);
+
+      // Muat halaman pertama saat halaman dimuat
+      loadMoreBooks();
     </script>
-</body>
+  </body>
 </html>
